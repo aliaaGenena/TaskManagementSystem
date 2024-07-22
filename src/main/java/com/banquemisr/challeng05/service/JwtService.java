@@ -72,13 +72,12 @@ public class JwtService {
 
 		String jwtSubject = claims.getSubject();
 
-		// Extract roles from claims
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		List<Map<String, ?>> roles = (List<Map<String, ?>>) claims.get("roles");
 
 		if (roles != null) {
 			for (Map<String, ?> role : roles) {
-				// Extract authority from each role object
+
 				String authority = (String) role.get("authority");
 				authorities.add(new SimpleGrantedAuthority("ROLE_" + authority));
 			}

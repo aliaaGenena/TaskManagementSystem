@@ -9,8 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.banquemisr.challeng05.constant.ResponseStatusEnum;
 import com.banquemisr.challeng05.dao.TaskRepo;
 import com.banquemisr.challeng05.dto.TaskDTO;
+import com.banquemisr.challeng05.error.BusinessException;
 import com.banquemisr.challeng05.mapper.TaskMapper;
 import com.banquemisr.challeng05.pojo.Task;
 
@@ -34,17 +36,26 @@ public class TaskService {
 	}
 
 	@Transactional
-	public TaskDTO createTask(TaskDTO taskDTO) {
+	public TaskDTO createTask(TaskDTO taskDTO) throws BusinessException {
 
+		if (findAllByDuedate(taskDTO.getDuedate()).size() > 3) {
+			throw new BusinessException(ResponseStatusEnum.EXCEED_TASKS_PER_DAY);
+		}
 		Task task = taskRepo.save(taskMapper.mapTask(taskDTO));
 		return taskMapper.mapDto(task);
 
 	}
 
 	@Transactional
-	public TaskDTO updateTask(TaskDTO taskDTO) {
+	public TaskDTO updateTask(TaskDTO taskDTO) throws BusinessException {
 
-		Task task = taskRepo.findById(taskDTO.getId()).get();
+		Task task = taskRepo.findById(taskDTO.getId())
+				.orElseThrow(() -> new BusinessException(ResponseStatusEnum.NOTFOUND));
+
+		if (findAllByDuedate(taskDTO.getDuedate()).size() > 3) {
+			throw new BusinessException(ResponseStatusEnum.EXCEED_TASKS_PER_DAY);
+		}
+
 		task.setTitle(taskDTO.getTitle());
 		task.setDescription(taskDTO.getDescription());
 		task.setPriority(taskDTO.getPriority());
@@ -57,17 +68,16 @@ public class TaskService {
 	}
 
 	@Transactional
-	public void deleteTask(TaskDTO taskDTO) {
-
+	public void deleteTask(TaskDTO taskDTO) throws BusinessException {
+		taskRepo.findById(taskDTO.getId()).orElseThrow(() -> new BusinessException(ResponseStatusEnum.NOTFOUND));
 		taskRepo.deleteById(taskDTO.getId());
 
 	}
-	
-	
-	public List<TaskDTO> getAllDueTasks() {
-		List<Task> tasks =taskRepo.findAllByDuedate(LocalDate.now());
-		return taskMapper.mapTaskDTOs(tasks);
-		
-	}
 
+	public List<TaskDTO> findAllByDuedate(LocalDate date) {
+		List<Task> tasks = taskRepo.findAllByDuedate(date);
+		return taskMapper.mapTaskDTOs(tasks);
+
+	}
+	
 }

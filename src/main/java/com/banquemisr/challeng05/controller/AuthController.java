@@ -14,6 +14,8 @@ import com.banquemisr.challeng05.request.AuthRq;
 import com.banquemisr.challeng05.response.AuthRs;
 import com.banquemisr.challeng05.service.JwtService;
 import com.banquemisr.challeng05.service.UserService;
+
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
@@ -30,7 +32,7 @@ public class AuthController {
 	UserService userService;
 
 	@PostMapping("/login")
-	public ResponseEntity<AuthRs> login(@RequestBody AuthRq request) throws BusinessException {
+	public ResponseEntity<AuthRs> login(@Valid @RequestBody AuthRq request) throws BusinessException {
 		log.info("Received login request: {}", request);
 
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));

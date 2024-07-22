@@ -3,7 +3,7 @@ package com.banquemisr.challeng05.constant;
 public enum ResponseStatusEnum {
 
 	SUCCESS(200, "SUCCESS"), SERVER_ERROR(500, "SERVER_ERROR"), INVALIDREQUEST(400, "INVALID_REQUEST"),
-	NOTFOUND(501, "NOT_EXIST"), ALREADYFOUND(209, "ALREADY_EXIST");
+	NOTFOUND(501, "NOT_EXIST"), ALREADYFOUND(209, "ALREADY_EXIST"),EXCEED_TASKS_PER_DAY(210,"EXCEED_TASKS_PER_DAY");
 
 	private int ecode;
 	private String message;

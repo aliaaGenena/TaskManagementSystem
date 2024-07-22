@@ -18,7 +18,7 @@ INSERT INTO "user_role" (USER_ID,ROLE_ID) VALUES
 (1,5),
 (2,4);
 
-INSERT INTO TASK (ID,TITLE,DESCRIPTION,STATUS,PRIORITY,DUEDATE) VALUES
+INSERT INTO TASK (TASK_ID,TITLE,DESCRIPTION,STATUS,PRIORITY,DUEDATE) VALUES
 (1,'1review','review daily report on transactions','done','medium','2024-07-01'),
 (2,'2review','review daily report on transactions','in progress','high','2024-07-01'),
 (3,'3review','review daily report on transactions','todo','low','2024-07-01'),

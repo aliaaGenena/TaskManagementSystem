@@ -1,5 +1,6 @@
 package com.banquemisr.challeng05.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,6 +21,7 @@ public class EmailService {
 	public void sendMail(String subject, String to, String body) {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setSubject(subject);
+		mailMessage.setFrom("aliaa.emad.ali69@gmail.com");
 		mailMessage.setTo(to);
 		mailMessage.setText(body);
 
@@ -29,7 +31,7 @@ public class EmailService {
 
 	@Scheduled(cron = "0 0 0 * * *")
 	public void notifyTodayTasks() {
-		List<TaskDTO> taskDTOs = taskService.getAllDueTasks();
+		List<TaskDTO> taskDTOs = taskService.findAllByDuedate(LocalDate.now());
 
 		for (TaskDTO taskDTO : taskDTOs) {
 			StringBuilder body = new StringBuilder();
@@ -37,7 +39,7 @@ public class EmailService {
 					.append(" with description ").append(taskDTO.getDescription())
 					.append(" Nothing that it's priority ").append(taskDTO.getPriority());
 
-			sendMail("TodayTasks", "aliaa.emad.ali69@gmail", body.toString());
+			sendMail("TodayTasks", "user@gmail", body.toString());
 
 		}
 

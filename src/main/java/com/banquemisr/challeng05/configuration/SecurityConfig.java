@@ -65,7 +65,6 @@ public class SecurityConfig {
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         
-        // Allow frames from the same origin (needed for H2 console)
         http.headers().frameOptions().sameOrigin();
         return http.build();
     }

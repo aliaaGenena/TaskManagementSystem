@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-20T21:08:22+0300",
-    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 22.0.1 (Eclipse Adoptium)"
+    date = "2024-07-22T04:46:13+0300",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.12 (Oracle Corporation)"
 )
 @Component
 public class TaskMapperImpl implements TaskMapper {
@@ -23,12 +23,12 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskDTO taskDTO = new TaskDTO();
 
-        taskDTO.setDescription( task.getDescription() );
-        taskDTO.setDuedate( task.getDuedate() );
         taskDTO.setId( task.getId() );
-        taskDTO.setPriority( task.getPriority() );
-        taskDTO.setStatus( task.getStatus() );
         taskDTO.setTitle( task.getTitle() );
+        taskDTO.setDescription( task.getDescription() );
+        taskDTO.setStatus( task.getStatus() );
+        taskDTO.setPriority( task.getPriority() );
+        taskDTO.setDuedate( task.getDuedate() );
 
         return taskDTO;
     }
@@ -55,14 +55,14 @@ public class TaskMapperImpl implements TaskMapper {
 
         Task task = new Task();
 
-        task.setDescription( taskDTO.getDescription() );
-        task.setDuedate( taskDTO.getDuedate() );
         if ( taskDTO.getId() != null ) {
             task.setId( taskDTO.getId() );
         }
-        task.setPriority( taskDTO.getPriority() );
-        task.setStatus( taskDTO.getStatus() );
         task.setTitle( taskDTO.getTitle() );
+        task.setDescription( taskDTO.getDescription() );
+        task.setStatus( taskDTO.getStatus() );
+        task.setPriority( taskDTO.getPriority() );
+        task.setDuedate( taskDTO.getDuedate() );
 
         return task;
     }
